@@ -29,6 +29,10 @@ public class Pipeline {
     public static Mat black  = new Mat();
     public static int blackcut=0;
 
+    public static boolean doFoundations = true;
+    public static boolean doStones = true;
+    public static boolean doSkyStones = true;
+
     public static Mat process(Mat source0){
         return process(source0, 640, 480);
         //return process(source0, 3264/4, 2448/4);
@@ -49,16 +53,6 @@ public class Pipeline {
 
         //white balance
 
-        /*
-        compute.forEach(resizedImage,
-        	(double[] d) -> {
-        		//b,g,r
-        		d[0]*=1.15;
-        		d[2]*=0.9;
-
-        		return d;
-        	});
-        */
 
         Mat original = resizedImage.clone();
 
@@ -124,9 +118,13 @@ public class Pipeline {
         yellow = yellowOutput.clone();
         black = blackOutput.clone();
 
-        skyStones = computeSkyStones(yellowTags,original);
-        stones = computeStones(yellowOutput, original);
-        foundations = computeFoundations(redOutput, blueOutput, yellowOutput, blackOutput, original);
+        skyStones.clear();
+        stones.clear();
+        foundations.clear();
+
+        if(doSkyStones) skyStones = computeSkyStones(yellowTags,original);
+        if(doStones) stones = computeStones(yellowOutput, original);
+        if(doFoundations) foundations = computeFoundations(redOutput, blueOutput, yellowOutput, blackOutput, original);
 
         for (Stone s : stones) {
             s.draw(original);
@@ -207,6 +205,7 @@ public class Pipeline {
         //populate array of detected (color only)
         List<Detected> detected = new ArrayList<Detected>();
         List<MatOfPoint> detectedHulls = new ArrayList<MatOfPoint>();
+
         //we will segregate the blacks
         List<Detected> blacks = new ArrayList<Detected>();
 

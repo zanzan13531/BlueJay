@@ -126,7 +126,7 @@ public class compute {
      * Also removes contours surrounding everything
      *
      * @param inputContours  is the input list of contours
-     * @param output         is the the output list of contours
+     * @return is the the output list of contours
      * @param minArea        is the minimum area of a contour that will be kept
      */
     static List<MatOfPoint> filterContours(List<MatOfPoint> inputContours, double minArea) {
@@ -224,6 +224,17 @@ public class compute {
 		   		m.put(y,x,colDat);
 	        }
         }
+    }
+
+    static void whiteBalance(Mat canvas, double blueC, double redC) {
+        compute.forEach(canvas,
+                (double[] d) -> {
+                    //b,g,r
+                    d[0]*=blueC;
+                    d[2]*=redC;
+
+                    return d;
+                });
     }
     
     

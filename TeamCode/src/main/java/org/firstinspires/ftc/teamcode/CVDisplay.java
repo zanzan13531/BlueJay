@@ -5,6 +5,8 @@ import com.disnodeteam.dogecv.detectors.DogeCVDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.FoundationPipeline.Analysis;
+import org.firstinspires.ftc.teamcode.FoundationPipeline.Pipeline;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
@@ -14,7 +16,6 @@ import org.opencv.imgproc.Imgproc;
 @TeleOp(name = "CV Simulator", group = "Auto")
 public class CVDisplay extends OpMode {
 
-    //This is an example of an anonymous implementation of the DogeCV Detector
     private DogeCVDetector detector = new DogeCVDetector() {
         @Override
         public Mat process(Mat rgba) {
