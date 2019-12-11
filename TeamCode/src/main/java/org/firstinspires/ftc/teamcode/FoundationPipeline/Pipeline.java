@@ -49,10 +49,10 @@ public class Pipeline {
 
         //default image size: 3264 x 2448
         Imgproc.resize(source0, resizedImage, new Size(width*1, height*1), 0.0, 0.0, Imgproc.INTER_LINEAR);
-        //Start.display(resizedImage,1,"input");
 
-        //white balance
+        Mat equalizedImage = compute.equalize(resizedImage);
 
+        //compute.whiteBalance(resizedImage, 1.15,0.9);
 
         Mat original = resizedImage.clone();
 
@@ -95,20 +95,22 @@ public class Pipeline {
                 new double[]{0, 180},//sat  0, 180
                 new double[]{0, blackCutOff*0.8});//val
 
-        //For yellow
-        double[] yellowRange = {13,26};
+
+        //For yellow HUE HUE HUE
+        double[] yellowRange = {10+67,37+67};
+        double[] stressedYellowRange = {-1+67,40+67};
 
         //yellow stones face sideways, so there is less glare
         //thus the saturation minimum can be higher
         Mat yellowOutput = compute.threshold(
-        		resizedImage,
+        		equalizedImage,
         		yellowRange,
-        		new double[]{150, 255},//sat
+        		new double[]{100, 255},//sat
                 new double[]{blackCutOff*1.4, 255}); //val
 
         Mat yellowTags = compute.threshold(
-        		resizedImage,
-        		new double[]{10,37},
+        		equalizedImage,
+        		stressedYellowRange,
         		new double[]{100, 255},//sat
                 new double[]{blackCutOff*0.7, 255}); //val
 
@@ -143,6 +145,9 @@ public class Pipeline {
     }
 
     static List<SkyStone> computeSkyStones(Mat yellowTags, Mat canvas){
+    	//morph
+    	yellowTags = compute.fillHoro(yellowTags);
+
     	List<SkyStone> skyStones = new ArrayList<SkyStone>();
 
         List<MatOfPoint> hulls = compute.findHulls(yellowTags);
@@ -164,7 +169,8 @@ public class Pipeline {
         compute.drawHulls(internalHulls,drawInternalHulls);
 
         for(MatOfPoint h : internalHulls) {
-        	skyStones.add(new SkyStone(h));
+        	SkyStone ss = new SkyStone(h);
+        	if(!ss.isBastard)skyStones.add(ss);
         }
 
         return skyStones;
@@ -231,6 +237,11 @@ public class Pipeline {
             }
         }*/
         Mat detectedAll = new Mat(redOutput.rows(),redOutput.cols(),redOutput.type());
+        Imgproc.rectangle(detectedAll,
+        		new Point(0,0),
+        		new Point(detectedAll.width(),detectedAll.height()),
+        		new Scalar(0,0,0),
+        		-1);
         compute.drawHulls(detectedHulls, detectedAll, new Scalar(255,255,255),-1);
 
         //limit black to regions underneath
@@ -278,7 +289,8 @@ public class Pipeline {
         for (Detected d : blacks) {
             for (Detected j : detected) {
                 if (Math.abs(d.x - j.x) < 120 &&
-                	d.bounds.y > j.bounds.y && d.bounds.y < j.bounds.y+j.bounds.height+30 &&
+                	d.bounds.y > j.bounds.y-40 &&  //below the other
+                	d.bounds.y < j.bounds.y+j.bounds.height+30 &&//touching, whitin 30 pixels
                     Math.abs(d.bounds.width*1.0/j.bounds.width-1)  <  0.6)   {    
                     	foundations.add(Foundation.createFoundation(d, j));
                 }

@@ -14,15 +14,8 @@ public class SkyStone extends Stone {
 	public SkyStone(MatOfPoint shape) {
 		super(shape);
 
-		if (!isBastard)
-			return;
 		isBastard = false;
-
-		this.shape = shape;
-		bounds = Imgproc.boundingRect(shape);
-		Point centerPoint = center(shape);
-		this.x = centerPoint.x;
-		this.y = centerPoint.y;
+		if(length<0.4 || Properlength>30)isBastard = true;
 	}
 
 	public void draw(Mat canvas) {

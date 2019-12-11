@@ -178,8 +178,23 @@ public class compute {
     	Imgproc.erode(inp,proc,
     			Imgproc.getStructuringElement(
     					Imgproc.MORPH_RECT,
-    					new Size(1,40),
+    					new Size(2,40),
     					new Point(0,39)
+    				));
+    	return proc;
+    }
+    static Mat fillHoro(Mat inp) {
+    	Mat proc = new Mat();
+    	/*
+    		Imgproc.distanceTransform(inp,proc, Imgproc.DIST_C,5);
+    		
+    		Core.inRange(proc,new Scalar(threshold), new Scalar(255), proc);
+    	*/
+    	Imgproc.dilate(inp,proc,
+    			Imgproc.getStructuringElement(
+    					Imgproc.MORPH_RECT,
+    					new Size(10,1),
+    					new Point(5,0)
     				));
     	return proc;
     }
@@ -237,6 +252,17 @@ public class compute {
                 });
     }
     
+    static Mat equalize(Mat inp) {
+    	Mat out = new Mat();
+    	
+    	List<Mat> channels = new ArrayList<Mat>();
+        Core.split(inp,channels);
+        for (Mat mat : channels) {
+			Imgproc.equalizeHist(mat, mat);
+		}
+        Core.merge(channels,out);
+        return out;
+    }
     
     //============Histogram================
     //============Histogram================

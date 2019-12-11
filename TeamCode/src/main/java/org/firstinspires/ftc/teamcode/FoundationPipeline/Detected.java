@@ -27,8 +27,7 @@ class Detected {
 
         double size = Imgproc.contourArea(shape);
         if(c== Color.BLACK){
-            //if (length < 3)
-        	if (false)
+            if (length < 1)
                 isBastard = true; 
            if(size<200) isBastard = true;
         }else{
@@ -53,10 +52,13 @@ class Detected {
     }
 
     //We will cheat and do width/height because the correct calculation is expensive
+    //higher is longer
     double circularity(MatOfPoint inp) {
         final Rect bb = Imgproc.boundingRect(inp);
         final double ratio = bb.width / (double) bb.height;
         return ratio;
+    	//double perimeter = Imgproc.arcLength(new MatOfPoint2f(inp.toArray()),true);
+    	//return (Math.PI * perimeter * perimeter) / (4 * Imgproc.contourArea(inp));
     }
 
     public void draw(Mat canvas) {

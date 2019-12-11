@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.FoundationPipeline;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -12,23 +13,24 @@ public class Stone {
     
     public double x, y;
     double     length;
+    double     Properlength;
     MatOfPoint shape;
     boolean    isBastard = false;
     Rect       bounds;
 
     public Stone(MatOfPoint shape) {
-        this.length = circularity(shape);
+        bounds = Imgproc.boundingRect(shape);
+        this.length = (1.0*bounds.width)/bounds.height;
+        this.Properlength = circularity(shape);
         
-        if (length < 1.2)
+        if (length < 1)
             isBastard = true; //We only like the long ones. The short ones will be disposed of
         if(Imgproc.contourArea(shape)<70)
         	isBastard = true;
         
-        if(isBastard)return;
-        
         this.shape = shape;
-        bounds = Imgproc.boundingRect(shape);
-        Point centerPoint = center(shape);
+        
+        Point centerPoint = center(bounds);
         this.x = centerPoint.x;
         this.y = centerPoint.y;
         
@@ -42,15 +44,17 @@ public class Stone {
     //will use rectangular bounds instead of moments because Moments
     //are expensive to calculate and Rectangles are perfectly
     //fine for our horozontally aligned foundations
-    Point center(MatOfPoint inp) {
+    Point center(Rect bounds) {
         return new Point(bounds.x+bounds.width/2, bounds.y+bounds.height/2);
     }
 
     //We will cheat and do width/height because the correct calculation is expensive
     double circularity(MatOfPoint inp) {
-        final Rect bb = Imgproc.boundingRect(inp);
-        final double ratio = bb.width / (double) bb.height;
-        return ratio;
+        //final Rect bb = Imgproc.boundingRect(inp);
+        //final double ratio = bb.width / (double) bb.height;
+        //return ratio;
+        double perimeter = Imgproc.arcLength(new MatOfPoint2f(inp.toArray()),true);
+    	return (Math.PI * perimeter * perimeter) / (4 * Imgproc.contourArea(inp));
     }
     
     public void draw(Mat canvas) {
