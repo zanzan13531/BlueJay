@@ -15,7 +15,7 @@ public class SkyStone extends Stone {
 		super(shape);
 
 		isBastard = false;
-		if(length<0.4 || Properlength>30)isBastard = true;
+		if(length<0.2 || Properlength>25)isBastard = true;
 	}
 
 	public void draw(Mat canvas) {

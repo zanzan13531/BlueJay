@@ -20,9 +20,10 @@ public class CVDisplay extends OpMode {
         @Override
         public Mat process(Mat rgba) {
             Mat m = Pipeline.process(rgba);
-
-            Point stonePos = Analysis.skystonePosition(Pipeline.stones,m);
-            telemetry.addData("pos", stonePos.x +" "+stonePos.y);
+            Pipeline.doFoundations=false;
+            Pipeline.doStones=false;
+            //Point stonePos = Analysis.skystonePosition(Pipeline.stones,m);
+//            telemetry.addData("pos", stonePos.x +" "+stonePos.y);
             telemetry.update();
 
             Imgproc.resize(m, m, new Size(720, 560));

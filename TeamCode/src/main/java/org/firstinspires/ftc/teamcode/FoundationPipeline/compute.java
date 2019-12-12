@@ -7,6 +7,7 @@ import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -130,21 +131,30 @@ public class compute {
      * @param minArea        is the minimum area of a contour that will be kept
      */
     static List<MatOfPoint> filterContours(List<MatOfPoint> inputContours, double minArea) {
-    	List<MatOfPoint> output = new ArrayList<MatOfPoint>();
+        List<MatOfPoint> output = new ArrayList<MatOfPoint>();
         //operation
         for (int i = 0; i < inputContours.size(); i++) {
             final MatOfPoint contour = inputContours.get(i);
             final double area = Imgproc.contourArea(contour);
-            if (area < minArea) continue
-            ;
+            if (area < minArea) continue;
             Point tl = Imgproc.boundingRect(contour).tl();
+            Rect b = Imgproc.boundingRect(contour);
             if(tl.x<5 & tl.y<5)continue;
-            
+            if(b.width>636 || b.height>475)continue;
+
             output.add(contour);
         }
-        
-        
+
+
         return output;
+    }
+
+    static void floodFill(Mat canvas, Point origin) {
+        double[] pixel = canvas.get((int)origin.y,(int)origin.x);
+        if(pixel[0]==0)
+            return;
+
+        Imgproc.floodFill(canvas, new Mat(canvas.height()+2,canvas.width()+2,canvas.type()), origin, new Scalar(0,0,0));
     }
 
     /**
@@ -193,8 +203,8 @@ public class compute {
     	Imgproc.dilate(inp,proc,
     			Imgproc.getStructuringElement(
     					Imgproc.MORPH_RECT,
-    					new Size(10,1),
-    					new Point(5,0)
+    					new Size(5,1),
+    					new Point(3,0)
     				));
     	return proc;
     }
