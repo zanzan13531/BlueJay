@@ -23,7 +23,7 @@ public class Pipeline {
 
     private static int blackcut=0;
 
-    public static boolean doFoundations = true;
+    public static boolean doFoundations = false;
     public static boolean doStones = true;
     public static boolean doSkyStones = true;
 

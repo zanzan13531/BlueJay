@@ -2,9 +2,6 @@ package detectors;
 
 import android.graphics.Bitmap;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.futurerobotics.bluejay.original.detectors.foundation.Foundation;
-import org.futurerobotics.bluejay.original.detectors.foundation.FoundationPipeline;
-import org.futurerobotics.bluejay.original.detectors.foundation.Stone;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -13,6 +10,10 @@ import org.opencv.core.Mat;
 import java.util.ArrayList;
 import java.util.List;
 
+import detectors.FoundationPipeline.Foundation;
+import detectors.FoundationPipeline.Pipeline;
+import detectors.FoundationPipeline.Stone;
+
 public class OpenCvDetector implements StartStoppable {
 	
 	//Originally in RobotControllerActivity, but caused the camera shutter to make weird noises, so now it lives here
@@ -20,11 +21,11 @@ public class OpenCvDetector implements StartStoppable {
 		OpenCVLoader.initDebug();
 		//OR System.LoadLibrary("opencv_java3");
 	}
-	private final FoundationPipeline foundationPipeline = new FoundationPipeline();
-	public List<Foundation> foundations = new ArrayList<>(); //detected foundations
-	public List<Stone> stones = new ArrayList<>();
-	volatile boolean activated = false;
-	private ImageDetector vuforia;
+	private final Pipeline foundationPipeline = new Pipeline();
+	public List<Foundation>          foundations        = new ArrayList<>(); //detected foundations
+	public List<Stone>               stones             = new ArrayList<>();
+	volatile boolean                 activated          = false;
+	private ImageDetector            vuforia;
 	
 	public OpenCvDetector(OpMode opMode) {
 		

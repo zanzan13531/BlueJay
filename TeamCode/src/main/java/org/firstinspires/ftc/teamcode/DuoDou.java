@@ -67,8 +67,7 @@ public class DuoDou extends LinearOpMode {
 
         telemetry.addData("Booting Up", " . . .");
         telemetry.update();
-		new OpenCvDetector();
-		new OpencvDetector(this);
+		OpenCvDetector fieldDetector = new OpenCvDetector(this);
         ImageDetector detector = new ImageDetector(this, false);
         StoneDetector stone = new StoneDetector(this, false);
 
@@ -82,7 +81,7 @@ public class DuoDou extends LinearOpMode {
 
             //fieldDetector.print(fieldDetector.getObjects());
 
-            fieldDetector.printStones(fieldDetector.getObjectsStones());
+            //fieldDetector.printStones(fieldDetector.getObjectsStones());
 
 
 
