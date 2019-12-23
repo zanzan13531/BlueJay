@@ -90,7 +90,7 @@ public class CustomCameraView extends JavaCameraView {
 
                 // commented out bc this can add distortion to the image
                 // maximize size of the bitmap to remove black borders in portrait orientation
-                //mCacheBitmap = Bitmap.createScaledBitmap(mCacheBitmap, canvas.getHeight(), canvas.getWidth(), true);
+                //mCacheBitmap = Bitmap.createScaledBitmap(mCacheBitmap, canvas.getWidth(), canvas.getHeight()*(canvas.getWidth()/mCacheBitmap.getWidth()), true);
 
                 if (mScale != 0) {
                     canvas.drawBitmap(mCacheBitmap, new Rect(0,0,mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),

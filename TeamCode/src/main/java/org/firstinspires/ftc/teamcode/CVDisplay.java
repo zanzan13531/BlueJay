@@ -19,13 +19,13 @@ public class CVDisplay extends OpMode {
         @Override
         public Mat process(Mat rgba) {
             Pipeline.doFoundations=false;
-            Pipeline.doStones=true;
+            Pipeline.doStones=false;
             Pipeline.doSkyStones=true;
             Mat m = Pipeline.process(rgba);
 
             telemetry.update();
 
-            Imgproc.resize(m, m, new Size(720, 560));
+            Imgproc.resize(m, m, new Size(640*1.2, 480*1.2));
             return m;
         }
         @Override
