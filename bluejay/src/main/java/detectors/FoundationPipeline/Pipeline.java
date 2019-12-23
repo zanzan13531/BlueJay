@@ -28,13 +28,13 @@ public class Pipeline {
     public static boolean doSkyStones = true;
 
     public static Mat process(Mat source0){
-        try{
+//        try{
             return process(source0, 640, 480);
-        }catch(OutOfMemoryError e){
-            System.gc();
-        }
+//        }catch(OutOfMemoryError e){
+//            System.gc();
+//        }
         //return
-	    return new Mat();
+	    //return new Mat();
         // process(source0, 3264/4, 2448/4);
     }
 
@@ -48,7 +48,7 @@ public class Pipeline {
 //        System.runFinalization();
 
         //default image size: 3264 x 2448
-        Imgproc.resize(source0, resizedImage, new Size(height, width), 0.0, 0.0, Imgproc.INTER_LINEAR);
+        Imgproc.resize(source0, resizedImage, new Size(width, height), 0.0, 0.0, Imgproc.INTER_LINEAR);
 
         //DONT YOU DARE
         //compute.whiteBalance(resizedImage, 1.15,0.9);
@@ -90,6 +90,8 @@ public class Pipeline {
         blueOutput.release();
         yellowOutput.release();
         blackOutput.release();
+        yellowTags.release();
+        equalizedImage.release();
 
         return original;
     }
@@ -138,6 +140,9 @@ public class Pipeline {
         	}
         }
 
+        mask.release();
+        drawInternalHulls.release();
+
         return skyStones;
     }
 
@@ -159,6 +164,8 @@ public class Pipeline {
         		stones.add(d);
         	}
         }
+
+        dTrans.release();
 
         return stones;
     }
@@ -261,7 +268,13 @@ public class Pipeline {
             }
         }
 
+        detectedAll.release();
+
         return foundations;
+    }
+
+    public static void clean(){
+    	System.gc();
     }
 
 }

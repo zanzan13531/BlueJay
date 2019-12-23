@@ -44,12 +44,14 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -123,10 +125,11 @@ import org.firstinspires.inspection.RcInspectionActivity;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
-  private final float CHECK_MEMORY_FREQ_SECONDS = 3.0f;
-  private final float LOW_MEMORY_THRESHOLD_PERCENT = 5.0f; // Available %
+  private final float CHECK_MEMORY_FREQ_SECONDS = 0.5f;
+  private final float LOW_MEMORY_THRESHOLD_PERCENT = 30.0f; // Available %
   private Handler memoryHandler_;
 
   public static final String TAG = "RCActivity";
@@ -816,12 +819,15 @@ public class FtcRobotControllerActivity extends Activity {
   }
 
     public void checkAppMemory(){
+	    Log.d("MEMORY","           ");
       // Get app memory info
-      long available = Runtime.getRuntime().maxMemory();
-      long used = Runtime.getRuntime().totalMemory();
+      long used = Debug.getNativeHeapAllocatedSize();
+      long total = Debug.getNativeHeapSize();
+
+      Log.d("MEMORY",String.valueOf((used*1.0)/total));
 
       // Check for & and handle low memory state
-      float percentAvailable = 100f * (1f - ((float) used / available ));
+      float percentAvailable = 100f * (1f - ((float) used / total ));
       if( percentAvailable <= LOW_MEMORY_THRESHOLD_PERCENT )
         handleLowMemory();
 
@@ -832,6 +838,7 @@ public class FtcRobotControllerActivity extends Activity {
     }
 
     public void handleLowMemory(){
-      // Free Memory Here
+	    Log.d("MEMORY","go");
+	    System.gc();
     }
 }
