@@ -20,7 +20,7 @@ public class CVDisplay extends OpMode {
         public Mat process(Mat rgba) {
             Pipeline.doFoundations=false;
             Pipeline.doStones=true;
-            Pipeline.doSkyStones=false;
+            Pipeline.doSkyStones=true;
             Mat m = Pipeline.process(rgba);
 
             telemetry.update();

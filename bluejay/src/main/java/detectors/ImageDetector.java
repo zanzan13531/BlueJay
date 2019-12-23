@@ -2,7 +2,6 @@ package detectors;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.Nullable;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -11,11 +10,12 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.*;
-import org.futurerobotics.bluejay.original.localizers.Localizer;
-import org.futurerobotics.bluejay.original.localizers.PoseOrientation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import localizers.Localizer;
+import localizers.PoseOrientation;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
@@ -253,7 +253,6 @@ public class ImageDetector implements Localizer {
 		return new PoseOrientation(translation.get(0), translation.get(1), rotation.thirdAngle);
 	}
 	
-	private @Nullable
 	OpenGLMatrix getRecentPosition() {
 		List<OpenGLMatrix> newLocations = new ArrayList<>();
 		for (VuforiaTrackable trackable : allTrackables) {
