@@ -1,4 +1,4 @@
-package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
+package detectors.FoundationPipeline;
 
 import org.opencv.core.Mat;
 
