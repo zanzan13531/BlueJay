@@ -1,4 +1,4 @@
-package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
+package detectors.FoundationPipeline;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -18,8 +18,8 @@ public class Pipeline {
     private static Mat resizedImage = new Mat();
 
     public static  List<Foundation> foundations = new ArrayList<>();
-    public static List<Stone>      stones      = new ArrayList<>();
-    public static List<SkyStone>   skyStones   = new ArrayList<>();
+    public static List<Stone>       stones      = new ArrayList<>();
+    public static List<SkyStone>    skyStones   = new ArrayList<>();
 
     private static int blackcut=0;
 

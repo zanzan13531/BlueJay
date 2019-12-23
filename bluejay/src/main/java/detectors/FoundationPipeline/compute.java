@@ -1,4 +1,4 @@
-package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
+package detectors.FoundationPipeline;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -16,7 +16,6 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public class compute {
 
@@ -240,15 +239,6 @@ public class compute {
 		return ret;
 	}
 
-	static void forEach(Mat m, Function<double[], double[]> f) {
-		for (int x = 0; x < m.width(); x++) {
-			for (int y = 0; y < m.height(); y++) {
-				double[] colDat = m.get(y, x);
-				m.put(y, x, f.apply(colDat));
-				m.put(y, x, colDat);
-			}
-		}
-	}
 
 //	static void whiteBalance(Mat canvas, double blueC, double redC) {
 //		compute.forEach(canvas, (double[] d) -> {

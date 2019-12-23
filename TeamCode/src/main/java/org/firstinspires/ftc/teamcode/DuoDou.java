@@ -33,11 +33,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.futurerobotics.bluejay.original.detectors.ImageDetector;
-import org.futurerobotics.bluejay.original.detectors.OpencvDetector;
-import org.futurerobotics.bluejay.original.detectors.StoneDetector;
+import detectors.ImageDetector;
 
 import java.util.Iterator;
+
+import detectors.ImageDetector;
+import detectors.OpenCvDetector;
+
+import detectors.StoneDetector;
 
 /*
 
@@ -64,8 +67,8 @@ public class DuoDou extends LinearOpMode {
 
         telemetry.addData("Booting Up", " . . .");
         telemetry.update();
-
-        OpencvDetector fieldDetector = new OpencvDetector(this);
+		new OpenCvDetector();
+		new OpencvDetector(this);
         ImageDetector detector = new ImageDetector(this, false);
         StoneDetector stone = new StoneDetector(this, false);
 

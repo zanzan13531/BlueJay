@@ -5,10 +5,11 @@ import com.disnodeteam.dogecv.detectors.DogeCVDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.futurerobotics.bluejay.original.detectors.FoundationPipeline.Pipeline;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+
+import detectors.FoundationPipeline.Pipeline;
 
 
 @TeleOp(name = "CV Simulator", group = "Auto")
