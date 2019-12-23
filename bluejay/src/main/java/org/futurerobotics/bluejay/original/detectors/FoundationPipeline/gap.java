@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FoundationPipeline;
+package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -6,10 +6,10 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public class gap {
-	public int y;
-	public int x1;
-	public int x2;
-	public int width;
+	public int   y;
+	public int   x1;
+	public int   x2;
+	public int   width;
 	public Point center;
 	
 	public void draw (Mat canvas) {

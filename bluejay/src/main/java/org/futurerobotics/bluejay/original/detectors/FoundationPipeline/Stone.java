@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FoundationPipeline;
+package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -63,8 +63,8 @@ public class Stone {
         
         //Imgproc.drawContours(canvas, Arrays.asList(shape), 0, new Scalar(0, 0, 255), 4);
         Imgproc.rectangle(canvas, bounds.tl(), bounds.br(), new Scalar(0, 0, 255), 4);
-        Imgproc.putText(canvas, "STONE", new Point(x, y - 30), Core.FONT_HERSHEY_SIMPLEX, 0.6, black, 7);
-        Imgproc.putText(canvas, "STONE", new Point(x, y - 30), Core.FONT_HERSHEY_SIMPLEX, 0.6, color, 2);
+        Imgproc.putText(canvas, "STONE", new Point(x, y - 30), 0, 0.6, black, 7);
+        Imgproc.putText(canvas, "STONE", new Point(x, y - 30), 0, 0.6, color, 2);
         Imgproc.circle(canvas, new Point(x, y), 4, new Scalar(255, 255, 255), -1);
     }
     

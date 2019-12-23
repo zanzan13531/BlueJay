@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FoundationPipeline;
+package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -66,8 +66,8 @@ class Detected {
         Scalar black = new Scalar(0, 0, 0);
 
         Imgproc.drawContours(canvas, Arrays.asList(shape), 0, color, 2);
-        Imgproc.putText(canvas, c.toString(), new Point(bounds.tl().x,bounds.tl().y+20), Core.FONT_HERSHEY_SIMPLEX, 0.6, black, 7);
-        Imgproc.putText(canvas, c.toString(), new Point(bounds.tl().x,bounds.tl().y+20), Core.FONT_HERSHEY_SIMPLEX, 0.6, color, 2);
+        Imgproc.putText(canvas, c.toString(), new Point(bounds.tl().x,bounds.tl().y+20), 0, 0.6, black, 7);
+        Imgproc.putText(canvas, c.toString(), new Point(bounds.tl().x,bounds.tl().y+20), 0, 0.6, color, 2);
         Imgproc.circle(canvas, new Point(x, y), 4, new Scalar(255, 255, 255), -1);
     }
 

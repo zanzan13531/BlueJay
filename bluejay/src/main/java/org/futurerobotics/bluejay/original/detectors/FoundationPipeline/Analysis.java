@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FoundationPipeline;
+package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;

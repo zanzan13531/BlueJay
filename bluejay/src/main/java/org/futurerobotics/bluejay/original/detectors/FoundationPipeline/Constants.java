@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FoundationPipeline;
+package org.futurerobotics.bluejay.original.detectors.FoundationPipeline;
 
 import org.opencv.core.Mat;
 
@@ -9,12 +9,13 @@ public class Constants {
     public static final double[] redColor =  {110,120};
 
     public static final double[] yellowColor = {7+67,38+67};
-    public static final double[] stressedYellowColor = {-5+67,45+67};
-    public static Mat redOutput = new Mat();
-    public static Mat blueOutput = new Mat();
-    public static Mat blackOutput = new Mat();
+    public static final double[] stressedYellowColor = {-12+67,45+67};
+
+    public static Mat redOutput    = new Mat();
+    public static Mat blueOutput   = new Mat();
+    public static Mat blackOutput  = new Mat();
     public static Mat yellowOutput = new Mat();
-    public static Mat yellowTags = new Mat();
+    public static Mat yellowTags   = new Mat();
 
     public static void updateColors(Mat resizedImage, Mat equalizedImage, double blackCutOff) {
         /*
@@ -60,7 +61,7 @@ public class Constants {
         yellowTags = compute.threshold(  //just want all of it
                 resizedImage,
                 stressedYellowRange,
-                new double[]{100, 255},//sat
+                new double[]{80, 255},//sat
                 new double[]{blackCutOff*0.7 , 255}); //val
         //        Mat yellowTags = compute.threshold(
 //                resizedImage,

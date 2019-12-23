@@ -5,10 +5,8 @@ import com.disnodeteam.dogecv.detectors.DogeCVDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.FoundationPipeline.Analysis;
-import org.firstinspires.ftc.teamcode.FoundationPipeline.Pipeline;
+import org.futurerobotics.bluejay.original.detectors.FoundationPipeline.Pipeline;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -19,11 +17,11 @@ public class CVDisplay extends OpMode {
     private DogeCVDetector detector = new DogeCVDetector() {
         @Override
         public Mat process(Mat rgba) {
-            Mat m = Pipeline.process(rgba);
             Pipeline.doFoundations=false;
-            Pipeline.doStones=false;
-            //Point stonePos = Analysis.skystonePosition(Pipeline.stones,m);
-//            telemetry.addData("pos", stonePos.x +" "+stonePos.y);
+            Pipeline.doStones=true;
+            Pipeline.doSkyStones=false;
+            Mat m = Pipeline.process(rgba);
+
             telemetry.update();
 
             Imgproc.resize(m, m, new Size(720, 560));

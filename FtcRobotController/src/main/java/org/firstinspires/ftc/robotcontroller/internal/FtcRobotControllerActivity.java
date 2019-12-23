@@ -44,6 +44,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -123,8 +124,11 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @SuppressWarnings("WeakerAccess")
-public class FtcRobotControllerActivity extends Activity
-  {
+public class FtcRobotControllerActivity extends Activity {
+  private final float CHECK_MEMORY_FREQ_SECONDS = 3.0f;
+  private final float LOW_MEMORY_THRESHOLD_PERCENT = 5.0f; // Available %
+  private Handler memoryHandler_;
+
   public static final String TAG = "RCActivity";
   public String getTag() { return TAG; }
 
@@ -259,6 +263,9 @@ public class FtcRobotControllerActivity extends Activity
     if (enforcePermissionValidator()) {
       return;
     }
+
+    memoryHandler_ = new Handler();
+    checkAppMemory();
 
     RobotLog.onApplicationStart();  // robustify against onCreate() following onDestroy() but using the same app instance, which apparently does happen
     RobotLog.vv(TAG, "onCreate()");
@@ -807,4 +814,24 @@ public class FtcRobotControllerActivity extends Activity
       wifiMuteStateMachine.consumeEvent(WifiMuteEvent.USER_ACTIVITY);
     }
   }
+
+    public void checkAppMemory(){
+      // Get app memory info
+      long available = Runtime.getRuntime().maxMemory();
+      long used = Runtime.getRuntime().totalMemory();
+
+      // Check for & and handle low memory state
+      float percentAvailable = 100f * (1f - ((float) used / available ));
+      if( percentAvailable <= LOW_MEMORY_THRESHOLD_PERCENT )
+        handleLowMemory();
+
+      // Repeat after a delay
+      memoryHandler_.postDelayed( new Runnable(){ public void run() {
+        checkAppMemory();
+      }}, (int)(CHECK_MEMORY_FREQ_SECONDS * 1000) );
+    }
+
+    public void handleLowMemory(){
+      // Free Memory Here
+    }
 }
