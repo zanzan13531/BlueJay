@@ -10,6 +10,9 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Pipeline {
 	
@@ -27,15 +30,15 @@ public class Pipeline {
     public static boolean doStones = true;
     public static boolean doSkyStones = true;
 
+
     public static Mat process(Mat source0){
-//        try{
-            return process(source0, 640, 480);
-//        }catch(OutOfMemoryError e){
-//            System.gc();
-//        }
-        //return
-	    //return new Mat();
-        // process(source0, 3264/4, 2448/4);
+    	if(FtcRobotControllerActivity.PercentAvailable<FtcRobotControllerActivity.LOW_MEMORY_THRESHOLD_PERCENT){
+	        System.gc();
+        }
+
+    	return process(source0, 640, 480);
+
+    	// process(source0, 3264/4, 2448/4);
     }
 
     /**
@@ -44,8 +47,6 @@ public class Pipeline {
      * @return source image with annotations on it
      */
     private static Mat process(Mat source0, double width, double height) {
-//        System.gc();
-//        System.runFinalization();
 
         //default image size: 3264 x 2448
         Imgproc.resize(source0, resizedImage, new Size(width, height), 0.0, 0.0, Imgproc.INTER_LINEAR);
@@ -271,10 +272,6 @@ public class Pipeline {
         detectedAll.release();
 
         return foundations;
-    }
-
-    public static void clean(){
-    	System.gc();
     }
 
 }

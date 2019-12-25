@@ -122,6 +122,7 @@ public class compute {
 		int method = Imgproc.CHAIN_APPROX_SIMPLE;
 		Imgproc.findContours(input, contours, hierarchy, mode, method);
 
+
 	}
 
 	static void floodFill(Mat canvas, Point origin) {

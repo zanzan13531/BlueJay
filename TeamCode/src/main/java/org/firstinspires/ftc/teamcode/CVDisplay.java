@@ -19,13 +19,13 @@ public class CVDisplay extends OpMode {
         @Override
         public Mat process(Mat rgba) {
             Pipeline.doFoundations=false;
-            Pipeline.doStones=false;
-            Pipeline.doSkyStones=true;
+            Pipeline.doStones=true;
+            Pipeline.doSkyStones=false;
             Mat m = Pipeline.process(rgba);
 
             telemetry.update();
 
-            Imgproc.resize(m, m, new Size(640*1.2, 480*1.2));
+            Imgproc.resize(m, m, new Size(640*1.3, 480*1.3 ));
             return m;
         }
         @Override
@@ -68,5 +68,9 @@ public class CVDisplay extends OpMode {
     @Override
     public void stop() {
         if(detector != null) detector.disable(); //Make sure to run this on stop!
+    }
+
+    public static void clean(){
+    	System.gc();
     }
 }
