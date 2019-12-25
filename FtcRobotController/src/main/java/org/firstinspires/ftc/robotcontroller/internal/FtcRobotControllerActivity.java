@@ -126,14 +126,19 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
+
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
   private final float CHECK_MEMORY_FREQ_SECONDS = 0.5f;
-  private final float LOW_MEMORY_THRESHOLD_PERCENT = 30.0f; // Available %
+	public static final float LOW_MEMORY_THRESHOLD_PERCENT = 30.0f; // Available %
   private Handler memoryHandler_;
 
   public static final String TAG = "RCActivity";
-  public String getTag() { return TAG; }
+  static public long used;
+  static public long total;
+  static public float PercentAvailable;
+
+	public String getTag() { return TAG; }
 
   private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
   private static final int NUM_GAMEPADS = 2;
@@ -821,15 +826,13 @@ public class FtcRobotControllerActivity extends Activity {
     public void checkAppMemory(){
 	    Log.d("MEMORY","           ");
       // Get app memory info
-      long used = Debug.getNativeHeapAllocatedSize();
-      long total = Debug.getNativeHeapSize();
+       used = Debug.getNativeHeapAllocatedSize();
+       total = Debug.getNativeHeapSize();
 
       Log.d("MEMORY",String.valueOf((used*1.0)/total));
 
       // Check for & and handle low memory state
-      float percentAvailable = 100f * (1f - ((float) used / total ));
-      if( percentAvailable <= LOW_MEMORY_THRESHOLD_PERCENT )
-        handleLowMemory();
+       PercentAvailable = 100f * (1f - ((float) used / total ));
 
       // Repeat after a delay
       memoryHandler_.postDelayed( new Runnable(){ public void run() {
@@ -837,8 +840,4 @@ public class FtcRobotControllerActivity extends Activity {
       }}, (int)(CHECK_MEMORY_FREQ_SECONDS * 1000) );
     }
 
-    public void handleLowMemory(){
-	    Log.d("MEMORY","go");
-	    System.gc();
-    }
 }
