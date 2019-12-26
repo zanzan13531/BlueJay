@@ -20,14 +20,12 @@ It follows very simple rules:
 - All the above running simultaneously
 
 # Setup
-_Disclaimer: This is a messy way to do it, and overly simplified in its methology. It may not be responisble but it works
 1. Clone and make a new project at new>project>from version control>git in Android Studio. Code is in the `Teamcode` folder and `bluejay` module. We might do bintray hosting but haven't had time yet :p
-2. Sync Gradle. search for this command with ctrl+shift+a.
-3. Look at the examples in the `teamcode` folder.
-4. If if dosent work, ask me or someone who knows gradle (recomend the second option)
+2. Sync Gradle. Search for this command with ctrl+shift+a.
+3. Examples are in the `teamcode` folder.
 
 ## Using the Library
-I've been lax on documentaion, so ask me if there is stuff that breaks
+I've been lax on documentation, so ask if there is ambiguity
 First off, working code for everyone:
 
 	*Stuff here is outdated, bleh. Check teamcode for example.	
@@ -48,8 +46,8 @@ To request data, simply do:
 
 	detector.getPosition();
 
-For the OpenCV Element detector, I haven't had the time to fix things, so it has some special rules:
-- To turn on/off detection for each element, do `Pipeline.doSkyStones = True //True or false`, `Pipeline.doStones = True //True or false`, or `Pipeline.doFoundations = True //True or false`
+For the OpenCV Element detector, there are some special rules since I haven't standardized it yet:
+- To toggle detection for each element, set the `Pipeline.doSkyStones`, `Pipeline.doStones`, and `Pipeline.doFoundations` static booleans to True or False.
 - To turn on/off the ENTIRE detector, use`start()` and `stop()`. Note that turning off all individual element detections will still consume resources as there are common shared algorithms that run regardless of whether element detection is on or off.
 
 A note: the IMU class, as a non-absolute Localizer, will always return the difference in position since __the last time you called its getter method__. That means that if the robot spins more than 360 degrees between that time, you will have an unreliable rotational reading.
