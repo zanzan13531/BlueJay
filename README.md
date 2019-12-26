@@ -19,7 +19,13 @@ It follows very simple rules:
 - simplified interface for Vuforia and tensorflow
 - All the above running simultaneously
 
-# Setup
+## Maximizing Accuracy
+- Angle the phone so that the field covers as much of the camera image as possible (best performance with elements on field)
+- Don't let stones overlap vertically. The stone detector is optimized for horozontal rows of stones.
+- Don't let elements get too far away. Small shapes will be calssified as noise
+- Don't tilt the camera (like when you steer the car in asphalt 8). The shape classifier will get confused.
+
+## Setup
 1. Clone and make a new project at new>project>from version control>git in Android Studio. Code is in the `Teamcode` folder and `bluejay` module. We might do bintray hosting but haven't had time yet :p
 2. Sync Gradle. Search for this command with ctrl+shift+a.
 3. Examples are in the `teamcode` folder.
