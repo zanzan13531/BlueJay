@@ -22,7 +22,7 @@ import detectors.FoundationPipeline.Pipeline;
     Enjoy!
 
     Below is the code to display to the RC; thanks DogeCV! I tried easyOpenCV, but it was lagging and stuttering. (??)
-	If it crashes after about a minute, it's probably because OpenCV is using too much native memory. My solution
+	If it crashes after about a minute, it's probably becaugit reflog expire --expire=now --all && git gc --prune=now --aggressivese OpenCV is using too much native memory. My solution
 	is to call System.gc() whenever it reaches 70% (works on my g4 play) , but if someone knows more please contact me.
  */
 
@@ -40,8 +40,8 @@ public class CVDisplay extends OpMode {
 
         	 */
             Pipeline.doFoundations=false;
-            Pipeline.doStones=true;
-            Pipeline.doSkyStones=false;
+            Pipeline.doStones=false;
+            Pipeline.doSkyStones=true;
 
 
             Mat m = Pipeline.process(rgba);

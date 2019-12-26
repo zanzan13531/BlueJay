@@ -10,9 +10,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-public class StoneDetector implements StartStoppable {
+public class StoneDetector extends StartStoppable {
 	List<Recognition> objects;
-	volatile boolean activated = false;
 	private TFObjectDetector tfod;
 	
 	private HardwareMap hardwareMap;
@@ -21,7 +20,7 @@ public class StoneDetector implements StartStoppable {
 		this.hardwareMap = opMode.hardwareMap;
 		
 		//by creating an image detector, we ensure that the vulocalizer singleton has been created
-		tfod = SetupTensorflow(new ImageDetector(opMode).getVuforia(), useDisplay);
+		tfod = SetupTensorflow(new ImageDetector(opMode).getVuforiaLocalizer(), useDisplay);
 	}
 	
 	private TFObjectDetector SetupTensorflow(VuforiaLocalizer vuforia, boolean useDisplay) {
@@ -48,21 +47,21 @@ public class StoneDetector implements StartStoppable {
 		return tfod;
 	}
 	
-	public void start() {
-		tfod.activate();
-		activated = true;
-	}
-	
 	@Override
 	public void loop() {
 		updateObjects();
 	}
-	
-	public void stop() {
-		activated = false;
+
+	@Override
+	public void begin() {
+		tfod.activate();
+	}
+
+	@Override
+	public void end() {
 		tfod.shutdown();
 	}
-	
+
 	private void updateObjects() {
 		List<Recognition> sto = tfod.getUpdatedRecognitions();
 		

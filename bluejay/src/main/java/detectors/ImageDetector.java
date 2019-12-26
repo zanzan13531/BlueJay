@@ -23,7 +23,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
-public class ImageDetector implements Localizer {
+public class ImageDetector extends StartStoppable implements Localizer{
 	private static final String VUFORIA_KEY =
 			"<--Key Here-->";
 	//phone attributes
@@ -44,9 +44,8 @@ public class ImageDetector implements Localizer {
 	private static final float halfField = 72 * mmPerInch;
 	private static final float quadField = 36 * mmPerInch;
 	VuforiaTrackables allTrackables;
-	volatile boolean activated = false;
 	private VuforiaLocalizer vuforia = null;
-	
+
 	public ImageDetector(OpMode opMode) {
 		this(opMode, false);
 	}
@@ -86,6 +85,8 @@ public class ImageDetector implements Localizer {
 		Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
 		
 		this.vuforia = vuforia;
+
+		vuforia.setFrameQueueCapacity(1);
 	}
 	
 	private void setupTrackables(VuforiaTrackables targetsSkyStone) {
@@ -215,39 +216,34 @@ public class ImageDetector implements Localizer {
 		return vuforia != null;
 	}
 	
-	public VuforiaLocalizer getVuforia() {
+	public VuforiaLocalizer getVuforiaLocalizer() {
 		return vuforia;
 	}
 	
-	public void start() {
+	public void begin() {
 		allTrackables.activate();
-		
-		activated = true;
 	}
 	
-	public void stop() {
-		activated = false;
-		
+	public void end() {
 		allTrackables.deactivate();
 	}
-	
+
+	@Override
+	public void loop() {
+		calculatePosition();
+	}
+
 	/**
 	 * Gets the most recent position, if available.
 	 */
 	public PoseOrientation getPosition() {
 		if (!activated) throw new IllegalStateException("Not activated");
-		OpenGLMatrix matrix = getRecentPosition();
+		OpenGLMatrix matrix = calculatePosition();
 		if (matrix == null) return null;
 		return toPoseOrientation(matrix);
 	}
 	
-	private PoseOrientation toPoseOrientation(OpenGLMatrix matrix) {
-		VectorF translation = matrix.getTranslation();
-		Orientation rotation = Orientation.getOrientation(matrix, EXTRINSIC, XYZ, DEGREES);
-		return new PoseOrientation(translation.get(0), translation.get(1), rotation.thirdAngle);
-	}
-	
-	OpenGLMatrix getRecentPosition() {
+	OpenGLMatrix calculatePosition() {
 		List<OpenGLMatrix> newLocations = new ArrayList<>();
 		for (VuforiaTrackable trackable : allTrackables) {
 			VuforiaTrackableDefaultListener listener = (VuforiaTrackableDefaultListener) trackable.getListener();
@@ -274,12 +270,19 @@ public class ImageDetector implements Localizer {
 		sum.multiply(1f / newLocations.size());
 		return sum;
 	}
-	
+
+	private PoseOrientation toPoseOrientation(OpenGLMatrix matrix) {
+		VectorF translation = matrix.getTranslation();
+		Orientation rotation = Orientation.getOrientation(matrix, EXTRINSIC, XYZ, DEGREES);
+		return new PoseOrientation(translation.get(0), translation.get(1), rotation.thirdAngle);
+	}
+
 	/**
 	 * @return next image if available.
 	 */
 	public Bitmap getImage() {
 		try {
+
 			VuforiaLocalizer.CloseableFrame closeableFrame = vuforia.getFrameQueue().take();
 			try {
 				for (int i = 0; i < closeableFrame.getNumImages(); i++) {
