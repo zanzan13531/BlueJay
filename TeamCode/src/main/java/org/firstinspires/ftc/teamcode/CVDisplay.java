@@ -11,6 +11,20 @@ import org.opencv.imgproc.Imgproc;
 
 import detectors.FoundationPipeline.Pipeline;
 
+/*
+
+    If you're using this library, THANKS! I spent a lot of time on it.
+
+    However, stuff isn't as well-documented as I like...still working on that
+
+    So if you have questions, email me at xchenbox@gmail.com and I will get back to you in about a day (usually)
+
+    Enjoy!
+
+    Below is the code to display to the RC; thanks DogeCV! I tried easyOpenCV, but it was lagging and stuttering. (??)
+	If it crashes after about a minute, it's probably because OpenCV is using too much native memory. My solution
+	is to call System.gc() whenever it reaches 70% (works on my g4 play) , but if someone knows more please contact me.
+ */
 
 @TeleOp(name = "CV Simulator", group = "Auto")
 public class CVDisplay extends OpMode {
@@ -18,9 +32,18 @@ public class CVDisplay extends OpMode {
     private DogeCVDetector detector = new DogeCVDetector() {
         @Override
         public Mat process(Mat rgba) {
+
+        	/*
+        	    Here you can specify which elements are being detected.
+        	    At the moment, SkyStones are super-reliable, Individual stones can be detected if you set up
+        	    the camera right, and Foundations...need work.
+
+        	 */
             Pipeline.doFoundations=false;
             Pipeline.doStones=true;
             Pipeline.doSkyStones=false;
+
+
             Mat m = Pipeline.process(rgba);
 
             telemetry.update();

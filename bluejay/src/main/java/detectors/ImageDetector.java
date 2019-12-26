@@ -25,13 +25,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 public class ImageDetector implements Localizer {
 	private static final String VUFORIA_KEY =
-			"AdpOQvf/////AAABmVMPMsn7aUUnm1KFPBduEHRDxu+mTcwssSUu9XwZdfhNnf" +
-					"gEDfs+klqAkWKOsuZBS8101agFiMYFoJUZvnBjKYUYF2omelpSnPnhAS" +
-					"vQBrte9NaKCwWtg7tkzpA6HLBwz85LOG7q+qg+XMNJ2VSlbq4kKN0jD6" +
-					"j0vDG2acgcrI4htjNpNtpv6U41IvMK8EE8baX9HvVohRfZxP40UXV7noV" +
-					"rXHTlErsHWMxAAtRoIzkp1Ro7qfueNcjYRgsjHLaeCfAhQA4IQK28Xqir" +
-					"J8Jv2Ek7cdWYvzHpa3uVyuF76chz7qGc4eAw8nSC0Ebqd0yf9S0oyqIh7" +
-					"MhUBCtvSvbsCpnbWHG/30IBpkC6ENlZhJSh";
+			"<--Key Here-->";
 	//phone attributes
 	private static final boolean PHONE_IS_PORTRAIT = false;
 	// Everything is in mm

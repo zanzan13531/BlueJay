@@ -48,8 +48,7 @@ import detectors.StoneDetector;
 
     However, stuff isn't as well-documented as I like...still working on that
 
-    So if you have questions, email me at xchenbox@gmail.com and I will get back to you until I get
-    to the documentation.
+    So if you have questions, email me at xchenbox@gmail.com and I will get back to you in about a day (usually)
 
     Enjoy!
 
