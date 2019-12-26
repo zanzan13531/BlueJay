@@ -13,71 +13,23 @@ It follows very simple rules:
 
 ## Features
 
-- **OpenCV Foundation Detection** (Pretty good 95%) Pipeline: https://github.com/Future14473/CV-for-SkyStone-FTC/blob/master/bluejay/src/main/java/org/futurerobotics/bluejay/original/detectors/FoundationPipeline.java
-- **Opencv Stone Detection** (Pretty good 95%)
-- **Opencv SkyStone Detection** (Pretty good 95%)
-- Tensorflow Stone Detection (not as good as openCV)
-- Localization with Vumarks
-- IMU Interface
+- **OpenCV Foundation Detection**
+- **Opencv Stone Detection** (Pretty good 90%)
+- **Opencv SkyStone Detection** (Bestest one)
+- simplified interface for Vuforia and tensorflow
 - All the above running simultaneously
 
-## Super Quick Start for Rookie Teams
-I personally won't recommend doing this for the long run, but if you just need something to **work** then follow these steps:
-
-1. Go to the `Releases` Tab and download this as a .zip Android Studio Project
-2. Unzip the library
-3. Open Android Studio and go to File > new > existing project >**where you unzipped the library**
-4. Download to your RC
-5. Run <<Three systems>> opmode
-6. Positioning data will be printed via telemetry, if you want to plug the data elsewhere, find the Telemetry calls in the file `Douduo` and match the labels from the DS telemetry log
-
-* Note: I know that this download is >1GB, but it will save you the frustration of setup. It already has **everything**
-## Proper Start for the Minority who care
-_Disclaimer: This is a messy way to do it, and overly simplified in its methology. It may not be responisble but it works_
-1. Clone and make a new project from VCS in Android Studio. Code is in the `Original` folder. We might refactor into a module, but think this way is easier
-2. Install opencv for android version 3.4.3 into your project
-3. Fix dependencies by clicking the suggested links in your build window
-4. If if dosent work, go to the `build.gradle` and `build.releases.grade` folders in the Android File View. This is where IntelliJ writes down for real what all the dependencies for each module are. All the import UI is just an illusion. Go fix __that__. The details are beyond the scope of this readme
+# Setup
+_Disclaimer: This is a messy way to do it, and overly simplified in its methology. It may not be responisble but it works
+1. Clone and make a new project at new>project>from version control>git in Android Studio. Code is in the `Teamcode` folder and `bluejay` module. We might do bintray hosting but haven't had time yet :p
+2. Sync Gradle. search for this command with ctrl+shift+a.
+3. Look at the examples in the `teamcode` folder.
+4. If if dosent work, ask me or someone who knows gradle (recomend the second option)
 
 ## Using the Library
-First off, working code for everyone
+First off, working code for everyone:
 
-		@TeleOp(name = "The Three <<Holy Systems>>", group = "Primordial Artifact")
-		public class DuoDou extends LinearOpMode {
-	    	 public void runOpMode() {
-
-				telemetry.setAutoClear(true);
-
-				ImageDetector detector = new ImageDetector(this, false);
-				StoneDetector stone = new StoneDetector(this, true);
-				OpencvDetector foundation = new OpencvDetector(this);
-				IMU imu = new IMU(this);
-
-				stone.start();
-				detector.start();
-				foundation.start();
-				imu.start();
-
-				while (!isStopRequested()) {
-					detector.printposition(detector.getPosition());
-
-				    	foundation.print(foundation.getObjects());
-
-				    	stone.print(stone.getObjects());
-                                         
-                        detector.printposition(imu.getPosition());
-
-				    	telemetry.update();
-				}
-
-				// Disable Tracking when we are done;
-				detector.stop();
-				stone.stop();
-				foundation.stop();
-				imu.stop();
-			    }
-			}
-		}	
+	*Stuff here is outdated, bleh. Check teamcode for example.	
 
 
 All classes that the user uses follow a simple guideline: a constructor with clear parameter requirements, a `start()` method to begin computing, a `stop()` method to stop computing, and one method with `get` at the beginning of its name. This returns whatever the class is used for.
@@ -95,20 +47,9 @@ To request data, simply do:
 
 	detector.getPosition();
 
-And, for this class, will return an orientation() object. You can figure this out.
-
-Each class has an additional method that formats and sends its data output to Telemetry. ImageDetector has printPosition(orientation o) that will format and print the aforementioned orientation object
-
-So you can do:
-		
-	orientation o = detector.getPosition();
-	detector.printPosition(o);
-	
-Or: 
-
-	detector.printPosition(detector.getPosition());
-	
-Everything else is the same, but the Stone detector will return `recognition` objects and the Cv detector will return `Point` objects. These are all well documented and each class has the method that will format and interpret it for you.
+For the OpenCV Element detector, I haven't had the time to fix things, so it has some special rules:
+- To turn on/off detection for each element, do `Pipeline.doSkyStones = True //True or false`, `Pipeline.doStones = True //True or false`, or `Pipeline.doFoundations = True //True or false`
+- To turn on/off the ENTIRE detector, use`start()` and `stop()`. Note that turning off all individual element detections will still consume resources as there are common shared algorithms that run regardless of whether element detection is on or off.
 
 A note: the IMU class, as a non-absolute Localizer, will always return the difference in position since __the last time you called its getter method__. That means that if the robot spins more than 360 degrees between that time, you will have an unreliable rotational reading.
 	
