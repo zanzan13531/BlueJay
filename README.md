@@ -27,6 +27,7 @@ _Disclaimer: This is a messy way to do it, and overly simplified in its metholog
 4. If if dosent work, ask me or someone who knows gradle (recomend the second option)
 
 ## Using the Library
+I've been lax on documentaion, so ask me if there is stuff that breaks
 First off, working code for everyone:
 
 	*Stuff here is outdated, bleh. Check teamcode for example.	
