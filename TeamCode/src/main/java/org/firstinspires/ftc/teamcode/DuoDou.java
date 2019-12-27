@@ -78,7 +78,7 @@ public class DuoDou extends LinearOpMode {
         while (!isStopRequested()) {
             //detector.printposition(detector.getPosition());
 
-            //fieldDetector.print(fieldDetector.getObjects());
+            //fieldDetector.print(fieldDetector.getObjectsFoundations());
 
             //fieldDetector.printStones(fieldDetector.getObjectsStones());
 
@@ -102,7 +102,7 @@ public class DuoDou extends LinearOpMode {
 
 
 
-            //stone.print(stone.getObjects());
+            //stone.print(stone.getObjectsFoundations());
 
             //imu.printposition(imu.getDeltaPosition());
 

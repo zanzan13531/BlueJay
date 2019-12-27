@@ -50,7 +50,6 @@ public class OpenCvDetector extends StartStoppable {
 
 	}
 
-
 	/**
 	 * hold the phone as you would use it to browse reddit
 	 * x: 0 at the top, increases as you go down
@@ -77,7 +76,7 @@ public class OpenCvDetector extends StartStoppable {
 		skyStones.addAll(Pipeline.skyStones);
 	}
 
-	public List<Foundation> getObjects() {
+	public List<Foundation> getObjectsFoundations() {
 		if (!activated) throw new IllegalStateException("Not activated");
 
 		return foundations;
