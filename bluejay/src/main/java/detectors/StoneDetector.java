@@ -25,7 +25,7 @@ public class StoneDetector extends StartStoppable {
 	
 	private TFObjectDetector SetupTensorflow(VuforiaLocalizer vuforia, boolean useDisplay) {
 		if (!ClassFactory.getInstance().canCreateTFObjectDetector()) {
-			RobotLog.e("Tensorflow bootup failed. Brace for errors");
+			RobotLog.e("Tensorflow bootup failed. Brace for errors.");
 			return null;
 		}
 		

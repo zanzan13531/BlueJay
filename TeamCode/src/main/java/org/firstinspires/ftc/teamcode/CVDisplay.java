@@ -82,6 +82,7 @@ public class CVDisplay extends OpMode {
      */
     @Override
     public void loop() {
+        if (!Pipeline.skyStones.isEmpty()) telemetry.addData("Skystones: ", Pipeline.skyStones.get(0).x);
         telemetry.update();
     }
 

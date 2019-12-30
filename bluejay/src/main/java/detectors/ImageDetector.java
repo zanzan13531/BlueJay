@@ -7,6 +7,7 @@ import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
 import com.vuforia.Vuforia;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.*;
@@ -25,7 +26,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 public class ImageDetector extends StartStoppable implements Localizer{
 	private static final String VUFORIA_KEY =
-			"<--Key Here-->";
+			"Aavx5Qz/////AAAAGcwMlzKgX0wGhaL/CWYlFeYtE7dnCKQ/AmzFYGtGHUG3ogKwS0lKfxLktmZubI0SFjkA0xBQx+lc6YrVsLxFiYPanQ0dDL5iHD/hvadlnV1tLcsDCZjLJebarCLU8doOAYoH/aN24ASjgMcsiGnLcgwCFtQGZFU3/8osQG6JYojfVlm52hJD5hGcOorVyHCnu0AWQbfgIHgAJPEy9IcMEjHPkniM0AlynU7CJhTmXOwqlxKsyRMaTFQZq7NRtenUS7Ug9Bva8mPa2MMb4bVURntfetUve8cMffYJOxr5iywNJzNXtpPJUP5yfbGcGRiKZa/DxOMHTfej1d9/8p9cT/btC52zrwmD058MqJ3F9P4B";
 	//phone attributes
 	private static final boolean PHONE_IS_PORTRAIT = false;
 	// Everything is in mm
@@ -74,15 +75,14 @@ public class ImageDetector extends StartStoppable implements Localizer{
 		VuforiaLocalizer.Parameters parameters;
 		if (useDisplay) parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 		else parameters = new VuforiaLocalizer.Parameters();
-		
-		parameters.vuforiaLicenseKey = VUFORIA_KEY;
+		parameters.vuforiaLicenseKey = "Ae+k1Pv/////AAABmRCYHBUSikkUkb5Ynaxg0MEXE+kL9ht5Eo3KT2td1tN8IYAFLAgJZs2WSSnFGGShnm42suNcOPN3yJerr+vA9PNRzKHKGNioWP4MH26JYDk4XoexXxpmMDol6Ujy+52xOEx+Hpd9U+ow85nOhiG5g4cwubI/GRu9A4D5Yiw2ECMagvoG/Qb3Ye9WmjmGEOwBS1IxfKgIv9lCkR03sMJsDEwJAu/1QEfB/AeD3+76iScYz96dOpFfzIUrF5Lm0KOTz4qburMwZ8L9l1FeYoax221cIJeNLW80OZxOl2R12IljifPGdwvOSKDuWavgzJuUbQkazSueyNKupLgE8zqX+JstJRs3ZnVXfRLLDJj98k7c";
 		parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 		
 		//  Instantiate the Vuforia engine
 		VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(parameters);
 		
 		//not necessary, you can ignore it
-		Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
+		//Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
 		
 		this.vuforia = vuforia;
 
