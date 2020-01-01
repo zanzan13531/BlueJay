@@ -9,6 +9,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import java.sql.Time;
+import java.util.HashMap;
+
 import detectors.FoundationPipeline.Pipeline;
 
 /*
@@ -74,7 +77,6 @@ public class CVDisplay extends OpMode {
      */
     @Override
     public void start() {
-
     }
 
     /*
@@ -82,7 +84,8 @@ public class CVDisplay extends OpMode {
      */
     @Override
     public void loop() {
-        if (!Pipeline.skyStones.isEmpty()) telemetry.addData("Skystones: ", Pipeline.skyStones.get(0).x);
+        if (!Pipeline.skyStones.isEmpty()) telemetry.addData("Skystones: ", Pipeline.skyStones.get(0).y);
+        clean();
         telemetry.update();
     }
 
